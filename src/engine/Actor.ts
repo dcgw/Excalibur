@@ -317,8 +317,7 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
    */
   public visible: boolean = true;
   /**
-   * The opacity of an actor. Passing in a color in the [[constructor]] will use the
-   * color's opacity.
+   * The opacity of an actor.
    */
   public opacity: number = 1;
   public previousOpacity: number = 1;
@@ -454,8 +453,7 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
    * @param y       The starting y coordinate of the actor
    * @param width   The starting width of the actor
    * @param height  The starting height of the actor
-   * @param color   The starting color of the actor. Leave null to draw a transparent actor. The opacity of the color will be used as the
-   * initial [[opacity]].
+   * @param color   The starting color of the actor. Leave null to draw a transparent actor.
    */
   constructor(xOrConfig?: number | ActorArgs, y?: number, width?: number, height?: number, color?: Color) {
     super();
@@ -511,8 +509,6 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
 
     if (color) {
       this.color = color;
-      // set default opacity of an actor to the color
-      this.opacity = color.a;
     }
 
     // Build default pipeline
@@ -1128,11 +1124,6 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
     // Update action queue
     this.actionQueue.update(delta);
 
-    // Update color only opacity
-    if (this.color) {
-      this.color.a = this.opacity;
-    }
-
     // capture old transform
     this.body.captureOldTransform();
 
@@ -1221,6 +1212,7 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
       this.currentDrawing.draw({ ctx, x: offsetX, y: offsetY, opacity: this.opacity });
     } else {
       if (this.color && this.body && this.body.collider && this.body.collider.shape) {
+        ctx.globalAlpha = this.opacity;
         this.body.collider.shape.draw(ctx, this.color, new Vector(this.width * this.anchor.x, this.height * this.anchor.y));
       }
     }
