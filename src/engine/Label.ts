@@ -349,11 +349,9 @@ export class LabelImpl extends Actor {
         opacity: this.opacity
       });
     } else {
+      ctx.globalAlpha = this.opacity;
       ctx.textAlign = this._lookupTextAlign(this.textAlign);
       ctx.textBaseline = this._lookupBaseAlign(this.baseAlign);
-      if (this.color) {
-        this.color.a = this.opacity;
-      }
       ctx.fillStyle = this.color.toString();
       ctx.font = this._fontString;
       if (this.maxWidth) {
