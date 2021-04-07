@@ -345,7 +345,7 @@ export class SpriteImpl implements Drawable {
       flipVertical: options.flipVertical ?? this.flipVertical,
       anchor: options.anchor ?? this.anchor,
       offset: options.offset ?? this.offset,
-      opacity: options.opacity ?? this._opacity
+      opacity: (options.opacity ?? 1) * (this._opacity ?? 1)
     };
 
     if (this._dirtyEffect) {
@@ -375,7 +375,7 @@ export class SpriteImpl implements Drawable {
     }
 
     const oldAlpha = ctx.globalAlpha;
-    ctx.globalAlpha = opacity ?? 1;
+    ctx.globalAlpha = opacity;
     ctx.drawImage(this._spriteCanvas, 0, 0, this.width, this.height, -xpoint, -ypoint, drawWidth, drawHeight);
     ctx.globalAlpha = oldAlpha;
 
