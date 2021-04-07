@@ -1133,10 +1133,6 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
       this.color.a = this.opacity;
     }
 
-    if (this.opacity === 0) {
-      this.visible = false;
-    }
-
     // capture old transform
     this.body.captureOldTransform();
 
@@ -1232,7 +1228,7 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
 
     // Draw child actors
     for (let i = 0; i < this.children.length; i++) {
-      if (this.children[i].visible) {
+      if (this.children[i].visible && this.children[i].opacity > 0) {
         this.children[i].draw(ctx, delta);
       }
     }

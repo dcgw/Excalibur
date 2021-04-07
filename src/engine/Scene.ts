@@ -439,7 +439,7 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
     const sortedChildren = this._sortedDrawingTree.list();
     for (i = 0, len = sortedChildren.length; i < len; i++) {
       // only draw actors that are visible and on screen
-      if (sortedChildren[i].visible && !sortedChildren[i].isOffScreen) {
+      if (sortedChildren[i].visible && sortedChildren[i].opacity > 0 && !sortedChildren[i].isOffScreen) {
         sortedChildren[i].draw(ctx, delta);
       }
     }
@@ -453,7 +453,7 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
 
     for (i = 0, len = this.screenElements.length; i < len; i++) {
       // only draw ui actors that are visible and on screen
-      if (this.screenElements[i].visible) {
+      if (this.screenElements[i].visible && this.screenElements[i].opacity > 0) {
         this.screenElements[i].draw(ctx, delta);
       }
     }
