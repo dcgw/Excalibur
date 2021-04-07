@@ -188,10 +188,6 @@ export class LabelImpl extends Actor {
    */
   public caseInsensitive: boolean = true;
 
-  private _textShadowOn: boolean;
-  private _shadowOffsetX: number;
-  private _shadowOffsetY: number;
-
   /**
    * @param text        The text of the label
    * @param x           The x position of the label
@@ -218,9 +214,6 @@ export class LabelImpl extends Actor {
     this.body.collider.type = CollisionType.PreventCollision;
     this.fontFamily = fontFamily || 'sans-serif'; // coalesce to default canvas font
 
-    this._textShadowOn = false;
-    this._shadowOffsetX = 0;
-    this._shadowOffsetY = 0;
     if (spriteFont) {
       //this._textSprites = spriteFont.getTextSprites();
     }
@@ -327,9 +320,7 @@ export class LabelImpl extends Actor {
    * Clears the current text shadow
    */
   public clearTextShadow() {
-    this._textShadowOn = false;
-    this._shadowOffsetX = 0;
-    this._shadowOffsetY = 0;
+    this.useTextShadow(false);
   }
 
   public update(engine: Engine, delta: number) {
@@ -342,12 +333,6 @@ export class LabelImpl extends Actor {
     ctx.scale(this.scale.x, this.scale.y);
     ctx.rotate(this.rotation);
 
-    if (this._textShadowOn) {
-      ctx.save();
-      ctx.translate(this._shadowOffsetX, this._shadowOffsetY);
-      this._fontDraw(ctx);
-      ctx.restore();
-    }
     this._fontDraw(ctx);
 
     super.draw(ctx, delta);
