@@ -320,7 +320,6 @@ export class ActorImpl extends Entity implements Actionable, Eventable, PointerE
    * The opacity of an actor.
    */
   public opacity: number = 1;
-  public previousOpacity: number = 1;
 
   /**
    * Direct access to the actor's [[ActionQueue]]. Useful if you are building custom actions.
