@@ -332,11 +332,10 @@ export class LabelImpl extends Actor {
     ctx.translate(this.pos.x, this.pos.y);
     ctx.scale(this.scale.x, this.scale.y);
     ctx.rotate(this.rotation);
-
     this._fontDraw(ctx);
+    ctx.restore();
 
     super.draw(ctx, delta);
-    ctx.restore();
   }
 
   private _fontDraw(ctx: CanvasRenderingContext2D) {
@@ -350,9 +349,6 @@ export class LabelImpl extends Actor {
         opacity: this.opacity
       });
     } else {
-      const oldAlign = ctx.textAlign;
-      const oldTextBaseline = ctx.textBaseline;
-
       ctx.textAlign = this._lookupTextAlign(this.textAlign);
       ctx.textBaseline = this._lookupBaseAlign(this.baseAlign);
       if (this.color) {
@@ -365,9 +361,6 @@ export class LabelImpl extends Actor {
       } else {
         ctx.fillText(this.text, 0, 0);
       }
-
-      ctx.textAlign = oldAlign;
-      ctx.textBaseline = oldTextBaseline;
     }
   }
 
